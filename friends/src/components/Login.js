@@ -20,10 +20,12 @@ class Login extends Component {
   
   login = (e) => {
       e.preventDefault();
+
       axiosWithAuth()
       .post('/login', this.state.credentials)
       .then (result => {
-          localStorage.setItem('token', res.data.payload);
+          console.log('kd: login: axios post', result.data)
+          localStorage.setItem('token', result.data.token);
           this.props.history.push('/protected');
       })
       .catch(error => console.log(error));
