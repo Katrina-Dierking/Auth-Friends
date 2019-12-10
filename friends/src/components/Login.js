@@ -1,25 +1,25 @@
-import React, {Component} with 'react';
-import {axiosWithAuth} from '../utils/axiosWithAuth';
+import React, {Component} from 'react';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 class Login extends Component {
     state = {
         credentials : {
-            email: '',
+            username: '',
             password: ''
         }
     };
 
-  handleChange = (e) => {
+  handleChange = event => {
       this.setState ({
           credentials: {
               ...this.state.credentials,
-              [e.target.name] : e.target.value
+              [event.target.name] : event.target.value
           }
       });
   };
   
-  login = (e) => {
-      e.preventDefault();
+    const onSubmit = event => {
+      event.preventDefault();
 
       axiosWithAuth()
       .post('/login', this.state.credentials)
@@ -28,20 +28,22 @@ class Login extends Component {
           localStorage.setItem('token', result.data.token);
           this.props.history.push('/protected');
       })
-      .catch(error => console.log(error));
+      .catch(error => 
+        console.log(error));
   };
 
   render () {
       return (
           <>
-          <form onSubmit = {this.login}>
+          <form onSubmit = {this.onSubmit}>
                 <input 
                     type = 'text'
-                    name = 'email'
-                    placeholder = 'email'
-                    value = {this.state.credentials.email}
+                    name = 'username'
+                    placeholder = 'username'
+                    value = {this.state.credentials.username}
                     onChange = {this.handleChange}
                     />
+                    <br></br>
 
                 <input 
                     type = 'password'
@@ -50,6 +52,7 @@ class Login extends Component {
                     value = {this.state.credentials.password}
                     onChange = {this.handleChange}
                     />
+                    <br></br>
 
                     <button> Log In </button>
             </form>
