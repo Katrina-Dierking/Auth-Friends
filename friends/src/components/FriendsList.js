@@ -5,7 +5,7 @@ import FriendCard from './FriendCard';
 import Friend from './Friend';
 
 
-function FriendsList (props) {
+function FriendsList () {
     const [friends, setFriends] = useState([]);
 
     useEffect(() => {

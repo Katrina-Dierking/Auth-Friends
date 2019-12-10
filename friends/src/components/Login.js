@@ -1,47 +1,44 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
-class Login extends Component {
-    state = {
-        credentials : {
+function Login () {
+    const [credentials, setCredentials] = useState 
+        ({
             username: '',
             password: ''
-        }
-    };
+        });
+    
 
-  handleChange = event => {
-      this.setState ({
-          credentials: {
-              ...this.state.credentials,
-              [event.target.name] : event.target.value
-          }
-      });
-  };
+  const handleChange = event => {
+      setCredentials ({
+            ...credentials,
+            [event.target.name] : event.target.value
+          })
+      };
   
-    const onSubmit = event => {
+   const onSubmit = event => {
       event.preventDefault();
 
       axiosWithAuth()
       .post('/login', this.state.credentials)
       .then (result => {
-          console.log('kd: login: axios post', result.data)
-          localStorage.setItem('token', result.data.token);
+          console.log('kd: login: axios post', result.data.payload)
+          localStorage.setItem('token', result.data.payload);
           this.props.history.push('/protected');
       })
       .catch(error => 
         console.log(error));
-  };
+  }
 
-  render () {
       return (
           <>
-          <form onSubmit = {this.onSubmit}>
+          <form onSubmit = {onSubmit}>
                 <input 
                     type = 'text'
                     name = 'username'
                     placeholder = 'username'
-                    value = {this.state.credentials.username}
-                    onChange = {this.handleChange}
+                    value = {credentials.username}
+                    onChange = {handleChange}
                     />
                     <br></br>
 
@@ -49,16 +46,14 @@ class Login extends Component {
                     type = 'password'
                     name = 'password'
                     placeholder = ' * password'
-                    value = {this.state.credentials.password}
-                    onChange = {this.handleChange}
+                    value = {credentials.password}
+                    onChange = {handleChange}
                     />
                     <br></br>
 
                     <button> Log In </button>
             </form>
         </>
-      )
-  }
-}
-
+      );
+};
 export default Login;

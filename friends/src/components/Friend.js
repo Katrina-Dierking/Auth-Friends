@@ -2,15 +2,15 @@ import React, {useState} from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 const Friend = () => {
-    const [addFriend, setAddFriend] = useState ({
+    const [newFriend, setNewFriend] = useState ({
         name: '',
         age: '',
         email: ''
     });
 
     const handleChange = event => {
-        setAddFriend (
-            {...addFriend, 
+        setNewFriend (
+            {...newFriend, 
             [event.target.name]: event.target.value
         })};
 
@@ -18,11 +18,11 @@ const Friend = () => {
         event.preventDefault()
 
         axiosWithAuth()
-        .post ('./friends', addFriend)
+        .post ('./friends', newFriend)
         .then (result => {
             console.log ("kd: friendcard: axios post:friends", result)
-            setAddFriend ({
-                ...addFriend, 
+            setNewFriend ({
+                ...newFriend, 
                 name: '',
                 age: '',
                 email: ''
@@ -36,7 +36,7 @@ const Friend = () => {
             <input 
                 type = 'text'
                 name = 'name'
-                value = {addFriend.name}
+                value = {newFriend.name}
                 placeholder = "New Friend's Name"
                 onChange = {handleChange}
             />
@@ -45,7 +45,7 @@ const Friend = () => {
             <input
                 type = 'text'
                 name = 'age'
-                value = {addFriend.age}
+                value = {newFriend.age}
                 placeholder = 'age'
                 onChange = {handleChange}
             />
@@ -54,7 +54,7 @@ const Friend = () => {
             <input 
                 type = 'text'
                 name = 'email'
-                value = {addFriend.email}
+                value = {newFriend.email}
                 placeholder = '* email'
                 onChange = {handleChange}
             />
