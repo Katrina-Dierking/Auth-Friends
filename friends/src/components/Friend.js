@@ -1,38 +1,67 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
+import {withFormik, Form, field} from 'formik';
+import * as yup from 'yup';
+import styled from 'styled-components';
 
-const Friend = () => {
-    const [newFriend, setNewFriend] = useState ({
+function Friend () {
+    const [display, setDisplay] = useState(false);
+    const [newFriend, setNewFriend] = useState 
+    ({
         name: '',
         age: '',
-        email: ''
+        email: '',
+        id: 'null'
     });
 
     const handleChange = event => {
         setNewFriend (
             {...newFriend, 
             [event.target.name]: event.target.value
-        })};
+        })
+    };
 
-    const onSubmit = event => {
+    const handleSubmit = event => {
         event.preventDefault()
 
+        if (newFriend.name != ' ' 
+            && newFriend.age != ' ' 
+            && newFriend.email != '') 
+        
+        {
         axiosWithAuth()
-        .post ('./friends', newFriend)
-        .then (result => {
-            console.log ("kd: friendcard: axios post:friends", result)
+            .post ('./friends', newFriend)
+            .then (result => {
+                console.log ("kd: friendcard: axios post:friends", result)
+            })
+            .catch (error => console.log(error));
+
             setNewFriend ({
                 ...newFriend, 
                 name: '',
                 age: '',
-                email: ''
+                email: '', 
+                id: 'null'
             })
-            .catch (error => console.log(error));
-        })
+        };
     };
 
+        useEffect (() => {
+            axiosWithAuth()
+            .get('/friends')
+            .then (result => {
+                console.log(result)
+                setDisplay (true);
+            })
+            .catch (error => {
+                console.log(error)
+            });
+        });
+           
     return (
-        <form onSubmit = {onSubmit}>
+        <>
+        {display && (
+            <form onSubmit = {handleSubmit}>
             <input 
                 type = 'text'
                 name = 'name'
@@ -65,7 +94,10 @@ const Friend = () => {
                 >Add New Friend
             </button>
         </form>
+        )}
+        </>
     );
 };
+
 
 export default Friend;
