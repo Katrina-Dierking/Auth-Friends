@@ -1,32 +1,28 @@
-import React, {useState, useEffect} from 'react';
-import axiosWithAuth from '../utils/axiosWithAuth';
-
-import FriendCard from './FriendCard';
-import Friend from './Friend';
+import React, { useContext} from 'react';
+import FriendContext from './FriendContext';
 
 
 function FriendsList () {
-    const [friends, setFriends] = useState([]);
+    const {friends} = useContext (FriendContext)
+    console.log(friends)
 
-    useEffect(() => {
-
-        axiosWithAuth()
-            .get('http://localhost:5000/api/friends')
-            .then (result => {
-                console.log("kd:FriendsList:axios 'friends:'", result)
-                setFriends(result.data.friends)
-            })
-            .catch (error => console.log(error))
-    })
 
     return (
         <>
-            <Friend />
-            <h1> Meet My Friends: </h1>
             {friends.map (friend => (
                 <div>
-                    key={friend.id}
-                    <FriendCard friend = {friend} />
+                    <h3>Friend's Name: {friend.name}
+                    <br></br>
+                    Age: {friend.age}
+                    <br></br>
+                    Email: {friend.email} </h3>
+
+                    <button className = 'remove-friend-btn'
+                        // onClick = {() => unFriend (friend.id)}
+                        >
+                            UnFriend
+                        </button>
+                    <br></br>
                 </div>
                 
             ))}
