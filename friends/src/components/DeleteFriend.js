@@ -2,8 +2,8 @@ import React, { useContext} from 'react';
 import FriendContext from './FriendContext';
 
 
-function FriendsList () {
-    const {friends} = useContext (FriendContext)
+function DeleteFriend () {
+    const {friends, unFriend} = useContext (FriendContext)
     console.log(friends)
 
 
@@ -18,10 +18,11 @@ function FriendsList () {
                     Email: {friend.email} </h3>
 
                     <button className = 'remove-friend-btn'
-                        // onClick = {() => unFriend (friend.id)}
+                        onClick = {() => unFriend (friend.id)}
                         >
                             UnFriend
                         </button>
+                        <hr></hr>
                     <br></br>
                 </div>
                 
@@ -30,4 +31,4 @@ function FriendsList () {
     )
 }
 
-export default FriendsList;
+export default DeleteFriend;

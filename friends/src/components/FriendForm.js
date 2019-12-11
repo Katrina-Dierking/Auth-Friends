@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import FriendContext from './FriendContext'
-import FriendsList from './FriendsList'
+import DeleteFriend from './DeleteFriend'
 
 // import styled from 'styled-components';
 
@@ -21,7 +21,7 @@ function FriendForm () {
         setNewFriend (
             {...newFriend, 
             [event.target.name]: event.target.value
-        })
+        });
     };
 
     function handleSubmit (event) {
@@ -30,11 +30,18 @@ function FriendForm () {
         setFriendData (prevFriend => [...prevFriend, addFriend])
     };
 
+    const friends = friendData.map (friend =>
+        <h3 key = {friend.name + friend.email}>
+            {friend.name}
+            {friend.age}
+            {friend.email}
+        </h3>)
+
            
     return (
         <>
         {/* <Container> */}
-        
+            <br></br>
             <form onSubmit = {handleSubmit}>
                 <input
                     type = 'text'
@@ -44,6 +51,7 @@ function FriendForm () {
                     onChange = {handleChange}
                 />
             
+                <br></br>
                 <br></br>
            
             <input
@@ -55,6 +63,7 @@ function FriendForm () {
             />
             
             <br></br>
+            <br></br>
 
             <input
                 type = 'text'
@@ -65,20 +74,14 @@ function FriendForm () {
             />
            
             <br></br>
-            
+            <br></br>
             <button >Add New Friend</button>
+            <hr></hr>
          
 
-
-            {friendData.map (friend =>
-                <h3 key = {friend.name + friend.email}>
-                {friend.name}
-                {friend.age}
-                {friend.email}
-            </h3>)}
-           
+            {friends}
         </form>
-        <FriendsList />
+        <DeleteFriend/>
         </>
     );
 };

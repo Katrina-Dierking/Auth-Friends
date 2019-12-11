@@ -7,7 +7,7 @@ import FriendContext from './components/FriendContext';
 import Login from './components/Login';
 import Header from './components/Header';
 import FriendForm from './components/FriendForm';
-import FriendsList from './components/FriendsList';
+import FriendsList from './components/DeleteFriend';
 import PrivateRoute from './components/PrivateRoute';
 
 import './App.css';
