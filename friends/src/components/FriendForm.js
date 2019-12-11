@@ -10,12 +10,11 @@ function FriendForm () {
         name: '',
         age: '',
         email: '',
-        id: 'null'
+        id: ''
     });
 
     const {addFriend} = useContext (FriendContext);
 
-    const [friendData, setFriendData] = useState ([])
 
     const handleChange = event => {
         setNewFriend (
@@ -24,19 +23,9 @@ function FriendForm () {
         });
     };
 
-    function handleSubmit (event) {
-        event.preventDefault()
+    function handleSubmit () {
         addFriend(newFriend)
-        setFriendData (prevFriend => [...prevFriend, addFriend])
     };
-
-    const friends = friendData.map (friend =>
-        <h3 key = {friend.name + friend.email}>
-            {friend.name}
-            {friend.age}
-            {friend.email}
-        </h3>)
-
            
     return (
         <>
@@ -78,8 +67,6 @@ function FriendForm () {
             <button >Add New Friend</button>
             <hr></hr>
          
-
-            {friends}
         </form>
         <DeleteFriend/>
         </>
